@@ -6,12 +6,19 @@ const http = require("http");
 const cors = require("cors");
 const { Server } = require("socket.io");
 const connectDB = require("./config/db");
+const authRoutes = require("./routes/authRoutes");
+const workspaceRoutes = require("./routes/workspaceRoutes");
+const taskRoutes = require("./routes/taskRoutes");
 
 const app = express();
 const server = http.createServer(app);
 
 app.use(cors());
 app.use(express.json());
+
+app.use("/api/auth", authRoutes);
+app.use("/api/workspaces", workspaceRoutes);
+app.use("/api/tasks", taskRoutes);
 
 const io = new Server(server, {
     cors: {
